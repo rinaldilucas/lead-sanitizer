@@ -20,6 +20,7 @@ export class UploadersComponent {
         const self = this;
 
         fileReader.onloadend = function (fileLoadedEvent) {
+            debugger;
             const array = (fileLoadedEvent.target?.result as string).split('\n');
 
             array.forEach((element) => {
@@ -29,7 +30,7 @@ export class UploadersComponent {
                 }
             });
             const list: string[] = [];
-            sanitizedLines.forEach(element => list.push(element + '\r\n'));
+            sanitizedLines.forEach(element => list.push(element + '\r'));
             self.loadedDatabase = list;
         };
 
@@ -54,7 +55,7 @@ export class UploadersComponent {
 
             const filteredList = sanitizedLines.filter((element, index) => sanitizedLines.indexOf(element) === index);
             const list: string[] = [];
-            filteredList.forEach(element => list.push(element + '\r\n'));
+            filteredList.forEach(element => list.push(element + '\r'));
             self.loadedLeads = list;
         };
 
