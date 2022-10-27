@@ -11,6 +11,19 @@
     </div>
 
     <div class="uploaders__content">
+        <div class="uploaders__box" appDnd (fileDropped)="uploadFile($event)">
+            <input type="file" (change)="uploadFile($event.target)" />
+            <h3>Remove Duplicates</h3>
+
+            <span>Browse for file</span>
+            <div class="uploaders__result" *ngIf="loadedProfiles.length > 0">
+                <div fxLayout="row">
+                    <mat-icon>file_copy</mat-icon>
+                    <h4>{{ profileFileTitle }}</h4>
+                </div>
+            </div>
+        </div>
+
         <div class="uploaders__box" appDnd (fileDropped)="uploadDatabase($event)">
             <input type="file" (change)="uploadDatabase($event.target)" />
             <h3>Database Upload</h3>
@@ -19,7 +32,7 @@
             <div class="uploaders__result" *ngIf="loadedDatabase.length > 0">
                 <div fxLayout="row">
                     <mat-icon>file_copy</mat-icon>
-                    <h4>database.txt</h4>
+                    <h4>{{ databaseFileTitle }}</h4>
                 </div>
             </div>
         </div>
@@ -32,14 +45,15 @@
             <div class="uploaders__result" *ngIf="loadedLeads.length > 0">
                 <div fxLayout="row">
                     <mat-icon>file_copy</mat-icon>
-                    <h4>leads.txt</h4>
+                    <h4>{{ leadsFileTitle }}</h4>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="uploaders__download" *ngIf="isPrepared">
-        <button (click)="downloadDatabase()" mat-raised-button color="primary">Database</button>
+        <button (click)="downloadProfiles(profileFileTitle)" mat-raised-button color="primary">No Duplicates</button>
+        <button (click)="downloadDatabase(databaseFileTitle)" mat-raised-button color="primary">Database</button>
         <button (click)="downloadLeads()" mat-raised-button color="primary">Leads</button>
     </div>
 </div>
