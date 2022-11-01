@@ -137,7 +137,7 @@ export class UploadersComponent {
         const date = new Date().toISOString().slice(0, 10);
 
         chunkedList.forEach((list: any, index) => {
-            zip.file(date + '_leads-' + ++index + '.txt', list.toString().replace(/,/g, ''));
+            zip.file(date + '_leads-' + ++index + '.csv', list.toString().replace(/,/g, ''));
         });
         zip.generateAsync({ type: 'blob' }).then(function (content) {
             FileSaver.saveAs(content, date + '_leads.zip');
