@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-
+import FileSaver from 'file-saver';
+import * as JSZip from 'jszip';
 @Component({
     selector: 'app-uploaders',
     templateUrl: './uploaders.component.html',
@@ -14,7 +15,7 @@ export class UploadersComponent {
     profileFileTitle: string;
     databaseFileTitle: string;
     leadsFileTitle: string;
-    listSize = 300;
+    listSize = 50;
     isPrepared = false;
 
     uploadDatabase ($event) {
@@ -34,6 +35,13 @@ export class UploadersComponent {
             });
             const list: string[] = [];
             sanitizedLines.forEach(element => list.push(element + '\r'));
+            sanitizedLines.forEach((element, index) => {
+                if (element.length !== 14) {
+                    if (element.charAt(5) === '3') {
+                        element = element.substr(0, index) + '9' + element.substr(index);
+                    }
+                }
+            });
             self.loadedDatabase = list;
         };
 
@@ -125,10 +133,14 @@ export class UploadersComponent {
 
     downloadLeads () {
         const chunkedList = this.spliceIntoChunks(this.preparedLeads, this.listSize);
+        const zip = new JSZip();
+        const date = new Date().toISOString().slice(0, 10);
 
         chunkedList.forEach((list: any, index) => {
-            const date = new Date().toISOString().slice(0, 10);
-            this.downloadFile(list, date + '_leads-' + ++index + '.txt');
+            zip.file(date + '_leads-' + ++index + '.txt', list.toString().replace(/,/g, ''));
+        });
+        zip.generateAsync({ type: 'blob' }).then(function (content) {
+            FileSaver.saveAs(content, date + '_leads.zip');
         });
     }
 
