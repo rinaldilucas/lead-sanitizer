@@ -28,7 +28,8 @@ module.exports = {
                 'dot-notation': OFF,
                 'no-useless-constructor': OFF,
                 'no-debugger': OFF,
-                '@typescript-eslint/no-this-alias': OFF
+                '@typescript-eslint/no-this-alias': OFF,
+                'no-case-declarations': OFF
             }
         }
     ],

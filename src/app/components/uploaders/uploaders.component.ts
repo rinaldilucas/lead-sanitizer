@@ -15,7 +15,7 @@ export class UploadersComponent {
     profileFileTitle: string;
     databaseFileTitle: string;
     leadsFileTitle: string;
-    listSize = 50;
+    whatsapps = 8;
     isPrepared = false;
 
     uploadDatabase ($event) {
@@ -132,13 +132,79 @@ export class UploadersComponent {
     }
 
     downloadLeads () {
-        const chunkedList = this.spliceIntoChunks(this.preparedLeads, this.listSize);
+        let chunkedList = this.spliceIntoChunks(this.preparedLeads, 50);
         const zip = new JSZip();
         const date = new Date().toISOString().slice(0, 10);
+        let modifier = 1;
 
-        chunkedList.forEach((list: any, index) => {
-            zip.file(date + '_leads-' + ++index + '.csv', list.toString().replace(/,/g, ''));
-        });
+        for (let index = 0; index < 6; index++) {
+            if (chunkedList.length > 0) {
+                switch (index) {
+                case 0:
+                    const segunda = zip.folder(modifier + ' - ' + 'segunda-feira');
+                    for (let j = 0; j < this.whatsapps; j++) {
+                        if (chunkedList[j]) {
+                            segunda?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                        }
+                    }
+                    chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
+                    break;
+                case 1:
+                    const terca = zip.folder(modifier + ' - ' + 'terça-feira');
+                    for (let j = 0; j < this.whatsapps; j++) {
+                        if (chunkedList[j]) {
+                            terca?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                        }
+                    }
+                    chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
+                    break;
+                case 2:
+                    const quarta = zip.folder(modifier + ' - ' + 'quarta-feira');
+                    for (let j = 0; j < this.whatsapps; j++) {
+                        if (chunkedList[j]) {
+                            quarta?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                        }
+                    }
+                    chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
+                    break;
+                case 3:
+                    const quinta = zip.folder(modifier + ' - ' + 'quinta-feira');
+                    for (let j = 0; j < this.whatsapps; j++) {
+                        if (chunkedList[j]) {
+                            quinta?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                        }
+                    }
+                    chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
+                    break;
+                case 4:
+                    const sexta = zip.folder(modifier + ' - ' + 'sexta-feira');
+                    for (let j = 0; j < this.whatsapps; j++) {
+                        if (chunkedList[j]) {
+                            sexta?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                        }
+                    }
+                    chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
+                    break;
+                case 5:
+                    const sabado = zip.folder(modifier + ' - ' + 'sabado');
+                    for (let j = 0; j < this.whatsapps; j++) {
+                        if (chunkedList[j]) {
+                            sabado?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                        }
+                    }
+                    chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
+                    break;
+                }
+                modifier++;
+                if (index === 5) {
+                    index = 0;
+                }
+            }
+        }
+
+        // chunkedList.forEach((list: any, index) => {
+        //     zip.file(date + '_leads-' + ++index + '.csv', list.toString().replace(/,/g, ''));
+        // });
         zip.generateAsync({ type: 'blob' }).then(function (content) {
             FileSaver.saveAs(content, date + '_leads.zip');
         });
