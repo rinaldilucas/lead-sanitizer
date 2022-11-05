@@ -137,7 +137,8 @@ export class UploadersComponent {
         const date = new Date().toISOString().slice(0, 10);
         let modifier = 1;
 
-        for (let index = 0; index < 6; index++) {
+        for (let index = 0; index < 6;) {
+            debugger;
             if (chunkedList.length > 0) {
                 switch (index) {
                 case 0:
@@ -198,7 +199,11 @@ export class UploadersComponent {
                 modifier++;
                 if (index === 5) {
                     index = 0;
+                } else {
+                    index++;
                 }
+            } else {
+                index = 6;
             }
         }
 
