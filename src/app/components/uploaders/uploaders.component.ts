@@ -91,12 +91,13 @@ export class UploadersComponent {
                 }
             });
 
-            const filteredList = sanitizedLines.filter((element, index) => sanitizedLines.indexOf(element) === index);
+            const filteredList = sanitizedLines.filter((element, index) => sanitizedLines.indexOf(element.trim()) === index);
             const list: string[] = [];
             filteredList.forEach(element => list.push(element + '\r'));
             self.loadedProfiles = list;
         };
 
+        debugger;
         fileReader.readAsText(fileToLoad, 'UTF-8');
         this.profileFileTitle = $event.files[0].name;
     }
