@@ -15,10 +15,13 @@ export class UploadersComponent {
     profileFileTitle: string;
     databaseFileTitle: string;
     leadsFileTitle: string;
-    whatsapps = 8;
+    whatsapps = 10;
+    leadsQty = 60;
     isPrepared = false;
+    isLoading = false;
 
     uploadDatabase ($event) {
+        this.isLoading = true;
         const fileToLoad = $event.files[0];
         const fileReader = new FileReader();
         const sanitizedLines: string[] = [];
@@ -43,6 +46,7 @@ export class UploadersComponent {
                 }
             });
             self.loadedDatabase = list;
+            self.isLoading = false;
         };
 
         fileReader.readAsText(fileToLoad, 'UTF-8');
@@ -50,10 +54,12 @@ export class UploadersComponent {
     }
 
     uploadLeads ($event) {
+        this.isLoading = true;
+
+        const self = this;
         const fileToLoad = $event.files[0];
         const fileReader = new FileReader();
         const sanitizedLines: string[] = [];
-        const self = this;
 
         fileReader.onloadend = function (fileLoadedEvent) {
             const array = (fileLoadedEvent.target?.result as string).split('\n');
@@ -69,6 +75,7 @@ export class UploadersComponent {
             const list: string[] = [];
             filteredList.forEach(element => list.push(element + '\r'));
             self.loadedLeads = list;
+            self.isLoading = false;
         };
 
         fileReader.readAsText(fileToLoad, 'UTF-8');
@@ -97,19 +104,22 @@ export class UploadersComponent {
             self.loadedProfiles = list;
         };
 
-        debugger;
         fileReader.readAsText(fileToLoad, 'UTF-8');
         this.profileFileTitle = $event.files[0].name;
     }
 
     prepareLeads () {
+        this.isLoading = true;
+
+        setTimeout(() => {
+            this.preparedLeads = leads.filter(val => !database.includes(val));
+            const concatedList = database.concat(leads);
+            this.preparedDatabase = concatedList.filter((element, index) => concatedList.indexOf(element) === index);
+            this.isPrepared = true;
+            this.isLoading = false;
+        }, 500);
         const leads = this.loadedLeads;
         const database = this.loadedDatabase;
-
-        this.preparedLeads = leads.filter(val => !database.includes(val));
-        const concatedList = database.concat(leads);
-        this.preparedDatabase = concatedList.filter((element, index) => concatedList.indexOf(element) === index);
-        this.isPrepared = true;
     }
 
     downloadFile (data: string[], filename: string) {
@@ -133,7 +143,7 @@ export class UploadersComponent {
     }
 
     downloadLeads () {
-        let chunkedList = this.spliceIntoChunks(this.preparedLeads, 50);
+        let chunkedList = this.spliceIntoChunks(this.preparedLeads, this.leadsQty);
         const zip = new JSZip();
         const date = new Date().toISOString().slice(0, 10);
         let modifier = 1;

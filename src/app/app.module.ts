@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,7 +35,8 @@ import { UploadersComponent } from './components/uploaders/uploaders.component';
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
-        FormsModule
+        FormsModule,
+        MatProgressSpinnerModule
     ],
     exports: [
         MatIconModule,

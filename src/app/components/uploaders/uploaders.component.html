@@ -7,11 +7,20 @@
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>Leads</mat-label>
+            <input matInput type="number" [(ngModel)]="leadsQty" />
+            <button *ngIf="whatsapps" matSuffix mat-icon-button aria-label="Clear" (click)="leadsQty = 0">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
         <button (click)="prepareLeads()" mat-raised-button color="warn">Prepare Leads</button>
     </div>
 
     <div class="uploaders__content">
-        <div class="uploaders__box" appDnd (fileDropped)="uploadFile($event)">
+        <mat-spinner class="uploaders__loading" *ngIf="isLoading"></mat-spinner>
+
+        <div *ngIf="!isLoading" class="uploaders__box" appDnd (fileDropped)="uploadFile($event)">
             <input type="file" (change)="uploadFile($event.target)" />
             <h3>Remove Duplicates</h3>
 
@@ -24,7 +33,7 @@
             </div>
         </div>
 
-        <div class="uploaders__box" appDnd (fileDropped)="uploadDatabase($event)">
+        <div *ngIf="!isLoading" class="uploaders__box" appDnd (fileDropped)="uploadDatabase($event)">
             <input type="file" (change)="uploadDatabase($event.target)" />
             <h3>Database Upload</h3>
 
@@ -37,7 +46,7 @@
             </div>
         </div>
 
-        <div class="uploaders__box" appDnd (fileDropped)="uploadLeads($event)">
+        <div *ngIf="!isLoading" class="uploaders__box" appDnd (fileDropped)="uploadLeads($event)">
             <input type="file" (change)="uploadLeads($event.target)" />
             <h3>New Leads</h3>
 
@@ -51,7 +60,7 @@
         </div>
     </div>
 
-    <div class="uploaders__download" *ngIf="isPrepared">
+    <div class="uploaders__download" *ngIf="isPrepared && !isLoading">
         <button (click)="downloadProfiles(profileFileTitle)" mat-raised-button color="primary">No Duplicates</button>
         <button (click)="downloadDatabase(databaseFileTitle)" mat-raised-button color="primary">Database</button>
         <button (click)="downloadLeads()" mat-raised-button color="primary">Leads</button>
