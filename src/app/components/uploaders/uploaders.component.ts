@@ -85,20 +85,21 @@ export class UploadersComponent {
     uploadFile ($event) {
         const fileToLoad = $event.files[0];
         const fileReader = new FileReader();
-        const sanitizedLines: string[] = [];
         const self = this;
 
         fileReader.onloadend = function (fileLoadedEvent) {
             const list = [...new Set((fileLoadedEvent.target?.result as string).split('\n'))];
+            const errorList: string[] = [];
+            list.forEach(element => {
+                const ocurrences = (element as string).match(/,/g)?.length;
 
-            list.forEach((element) => {
-                if (element !== '\r' && element !== ',\r' && element !== '') {
-                    const newElement = element.replace(/\r?\n|\r/g, '');
-                    sanitizedLines.push(newElement);
+                if (ocurrences && ocurrences > 5) {
+                    errorList.push(element);
                 }
             });
 
-            self.loadedProfiles = list;
+            const finalList = list.filter(val => !errorList.includes(val));
+            self.loadedProfiles = finalList;
         };
 
         fileReader.readAsText(fileToLoad, 'UTF-8');
