@@ -17,6 +17,7 @@ export class UploadersComponent {
     leadsFileTitle: string;
     whatsapps = 10;
     leadsQty = 60;
+    isEmail = false;
     isPrepared = false;
     isLoading = false;
 
@@ -64,16 +65,29 @@ export class UploadersComponent {
         fileReader.onloadend = function (fileLoadedEvent) {
             const array = (fileLoadedEvent.target?.result as string).split('\n');
 
-            array.forEach((element) => {
-                if (element !== '\r' && element !== ',\r' && element !== '' && element.includes('+55')) {
-                    const newElement = element.replace(/\r?\n|\r/g, '').replace('.', '').replace(',', '');
-                    sanitizedLines.push(newElement);
-                }
-            });
+            if (self.isEmail) {
+                array.forEach((element) => {
+                    if (element !== '\r' && element !== ',\r' && element !== '') {
+                        const newElement = element.replace(/\r?\n|\r/g, '');
+                        sanitizedLines.push(newElement);
+                    }
+                });
+            } else {
+                array.forEach((element) => {
+                    if (element !== '\r' && element !== ',\r' && element !== '' && element.includes('+55')) {
+                        const newElement = element.replace(/\r?\n|\r/g, '').replace('.', '').replace(',', '');
+                        sanitizedLines.push(newElement);
+                    }
+                });
+            }
 
             const filteredList = sanitizedLines.filter((element, index) => sanitizedLines.indexOf(element) === index);
             const list: string[] = [];
-            filteredList.forEach(element => list.push(element + '\r'));
+            if (self.isEmail) {
+                filteredList.forEach(element => list.push(element + '\r\n'));
+            } else {
+                filteredList.forEach(element => list.push(element + '\r'));
+            }
             self.loadedLeads = list;
             self.isLoading = false;
         };
@@ -93,7 +107,7 @@ export class UploadersComponent {
             list.forEach(element => {
                 const ocurrences = (element as string).match(/,/g)?.length;
 
-                if (ocurrences && ocurrences > 5) {
+                if (ocurrences && ocurrences !== 5) {
                     errorList.push(element);
                 }
             });
@@ -145,16 +159,16 @@ export class UploadersComponent {
         const zip = new JSZip();
         const date = new Date().toISOString().slice(0, 10);
         let modifier = 1;
+        const extension = this.isEmail ? '.txt' : '.csv';
 
         for (let index = 0; index < 6;) {
-            debugger;
             if (chunkedList.length > 0) {
                 switch (index) {
                 case 0:
                     const segunda = zip.folder(modifier + ' - ' + 'segunda-feira');
                     for (let j = 0; j < this.whatsapps; j++) {
                         if (chunkedList[j]) {
-                            segunda?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                            segunda?.file(date + '_leads-' + (j + 1) + extension, chunkedList[j].toString().replace(/,/g, ''));
                         }
                     }
                     chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
@@ -163,7 +177,7 @@ export class UploadersComponent {
                     const terca = zip.folder(modifier + ' - ' + 'terça-feira');
                     for (let j = 0; j < this.whatsapps; j++) {
                         if (chunkedList[j]) {
-                            terca?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                            terca?.file(date + '_leads-' + (j + 1) + extension, chunkedList[j].toString().replace(/,/g, ''));
                         }
                     }
                     chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
@@ -172,7 +186,7 @@ export class UploadersComponent {
                     const quarta = zip.folder(modifier + ' - ' + 'quarta-feira');
                     for (let j = 0; j < this.whatsapps; j++) {
                         if (chunkedList[j]) {
-                            quarta?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                            quarta?.file(date + '_leads-' + (j + 1) + extension, chunkedList[j].toString().replace(/,/g, ''));
                         }
                     }
                     chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
@@ -181,7 +195,7 @@ export class UploadersComponent {
                     const quinta = zip.folder(modifier + ' - ' + 'quinta-feira');
                     for (let j = 0; j < this.whatsapps; j++) {
                         if (chunkedList[j]) {
-                            quinta?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                            quinta?.file(date + '_leads-' + (j + 1) + extension, chunkedList[j].toString().replace(/,/g, ''));
                         }
                     }
                     chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
@@ -190,7 +204,7 @@ export class UploadersComponent {
                     const sexta = zip.folder(modifier + ' - ' + 'sexta-feira');
                     for (let j = 0; j < this.whatsapps; j++) {
                         if (chunkedList[j]) {
-                            sexta?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                            sexta?.file(date + '_leads-' + (j + 1) + extension, chunkedList[j].toString().replace(/,/g, ''));
                         }
                     }
                     chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
@@ -199,7 +213,7 @@ export class UploadersComponent {
                     const sabado = zip.folder(modifier + ' - ' + 'sabado');
                     for (let j = 0; j < this.whatsapps; j++) {
                         if (chunkedList[j]) {
-                            sabado?.file(date + '_leads-' + (j + 1) + '.csv', chunkedList[j].toString().replace(/,/g, ''));
+                            sabado?.file(date + '_leads-' + (j + 1) + extension, chunkedList[j].toString().replace(/,/g, ''));
                         }
                     }
                     chunkedList = chunkedList.slice(this.whatsapps, chunkedList.length);
@@ -216,9 +230,6 @@ export class UploadersComponent {
             }
         }
 
-        // chunkedList.forEach((list: any, index) => {
-        //     zip.file(date + '_leads-' + ++index + '.csv', list.toString().replace(/,/g, ''));
-        // });
         zip.generateAsync({ type: 'blob' }).then(function (content) {
             FileSaver.saveAs(content, date + '_leads.zip');
         });
