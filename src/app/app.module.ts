@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,13 +16,15 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ReportsComponent } from './components/reports/reports.component';
 import { UploadersComponent } from './components/uploaders/uploaders.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavbarComponent,
-        UploadersComponent
+        UploadersComponent,
+        ReportsComponent
     ],
     imports: [
         BrowserModule,
@@ -38,7 +40,8 @@ import { UploadersComponent } from './components/uploaders/uploaders.component';
         MatFormFieldModule,
         MatInputModule,
         FormsModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        ReactiveFormsModule
     ],
     exports: [
         MatIconModule,
