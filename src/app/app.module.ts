@@ -1,9 +1,13 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -19,6 +23,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { UploadersComponent } from './components/uploaders/uploaders.component';
 import { ViewerComponent } from './components/viewer/viewer.component';
+registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
     declarations: [
@@ -36,6 +41,7 @@ import { ViewerComponent } from './components/viewer/viewer.component';
         MatIconModule,
         MatCheckboxModule,
         MatButtonModule,
+        MatAutocompleteModule,
         HttpClientModule,
         FlexLayoutModule,
         MatButtonModule,
@@ -43,16 +49,20 @@ import { ViewerComponent } from './components/viewer/viewer.component';
         MatInputModule,
         FormsModule,
         MatProgressSpinnerModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatChipsModule
     ],
     exports: [
         MatIconModule,
         MatButtonModule,
         MatButtonModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatAutocompleteModule,
+        MatChipsModule
     ],
-    providers: [],
+    providers: [
+        { provide: LOCALE_ID, useValue: 'pt-BR' }],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

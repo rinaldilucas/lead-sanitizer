@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import html2canvas from 'html2canvas';
 import JsPDF from 'jspdf';
+import { StateService } from '../services/state.service';
 
 @Component({
     selector: 'app-viewer',
@@ -9,7 +10,15 @@ import JsPDF from 'jspdf';
 })
 export class ViewerComponent {
     currentDate = new Date();
+    report;
     @ViewChild('pdfReport') pdfReport: ElementRef;
+
+    constructor (private stateService: StateService) {}
+
+    ngOnInit (): void {
+        this.report = this.stateService.data;
+        this.stateService.data = [];
+    }
 
     async generatePDF (): Promise<any> {
         const pdfReport = this.pdfReport.nativeElement;

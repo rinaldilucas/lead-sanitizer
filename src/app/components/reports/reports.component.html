@@ -1,30 +1,37 @@
 <div class="reports">
-    <h1>Gerador de relatórios</h1>
+    <div class="reports__wrapper">
+        <h1>Gerador de relatórios</h1>
+        <form class="reports__form" [formGroup]="form" (submit)="generateReport()">
+            <mat-form-field appearance="fill">
+                <mat-label>Usuário</mat-label>
+                <input matInput type="text" class="form-control" id="user" formControlName="user" />
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Valor</mat-label>
+                <input matInput type="number" class="form-control" id="price" formControlName="price" />
+            </mat-form-field>
 
-    <div class="reports__form">
-        <form [formGroup]="form" (submit)="generate()">
-            <div class="form-group">
-                <label for="user">Usuário</label>
-                <input type="user" class="form-control" id="user" formControlName="user" />
-            </div>
-            <div class="form-group">
-                <label for="price">Valor</label>
-                <input type="price" class="form-control" id="price" formControlName="price" />
-            </div>
-            <div class="form-group">
-                <label for="socialmedia">Rede</label>
-                <input type="socialmedia" class="form-control" id="socialmedia" formControlName="socialmedia" />
-                <!-- adicionar autocomplete -->
-            </div>
-            <div class="form-group">
-                <label for="services">Serviços</label>
-                <input type="services" class="form-control" id="services" formControlName="services" />
-                <!-- adicionar autocomplete  multi -->
-            </div>
+            <mat-form-field class="full-width" appearance="fill">
+                <input #medias type="text" formControlName="socialmedias" matInput placeholder="Redes" [matAutocomplete]="mediasAutocomplete" />
+                <mat-autocomplete #mediasAutocomplete="matAutocomplete">
+                    <mat-option *ngFor="let option of mediasFilteredOptions | async" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="fill">
+                <input #services type="text" formControlName="services" matInput placeholder="Serviços" [matAutocomplete]="servicesAutocomplete" />
+                <mat-autocomplete #servicesAutocomplete="matAutocomplete">
+                    <mat-option *ngFor="let option of servicesFilteredOptions | async" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
 
             <!-- //condicional baseado no valor do campo services -->
 
-            <button mat-raised-button color="primary" (click)="generate()" class="btn btn-primary">Gerar</button>
+            <button mat-raised-button color="primary" (click)="generateReport()" class="btn btn-primary">Gerar</button>
         </form>
     </div>
 </div>

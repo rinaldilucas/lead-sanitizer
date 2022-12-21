@@ -5,12 +5,16 @@
         <div class="viewer__report" #pdfReport id="pdfReport">
             <div class="viewer__report-header">
                 <img src="./assets/images/logo.png" alt="Blast! Assessoria" />
-                <h1>Relátorio de aplicação @usuario</h1>
+                <h1>Relátorio de aplicação {{ report.user }}</h1>
                 <h3>
                     Data: <span>{{ currentDate | date : "dd/MM/yyyy" }}</span>
                 </h3>
-                <h3>Valor: <span>R$10,00</span></h3>
-                <h3>Redes: <span>Facebook, Instagram, Youtube</span></h3>
+                <h3>
+                    Valor: <span>{{ report.price | currency : "BRL" }}</span>
+                </h3>
+                <h3>
+                    Redes: <span>{{ report.socialmedias }}</span>
+                </h3>
             </div>
             <div class="viewer__report-body">
                 <div class="viewer__report-body-item">
