@@ -18,13 +18,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { UploadersComponent } from './components/uploaders/uploaders.component';
+import { ViewerComponent } from './components/viewer/viewer.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavbarComponent,
         UploadersComponent,
-        ReportsComponent
+        ReportsComponent,
+        ViewerComponent
     ],
     imports: [
         BrowserModule,

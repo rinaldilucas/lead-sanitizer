@@ -1,0 +1,113 @@
+.viewer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: #e9e9e9;
+    min-height: calc(100vh - 64px);
+
+    &__wrapper {
+        width: 880px;
+        margin: 25px 0 45px;
+
+        button {
+            margin-bottom: 20px;
+        }
+    }
+
+    &__report {
+        padding: 30px 45px;
+        background-color: white;
+
+        &-header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 35px;
+
+            img {
+                width: 350px;
+                margin: 0 auto 35px auto;
+            }
+
+            h1 {
+                margin: 0 0 12px;
+                font-size: 28px;
+                font-weight: 500;
+            }
+
+            h2 {
+                margin: 0;
+                font-size: 22px;
+            }
+
+            h3 {
+                margin: 0;
+                font-size: 16px;
+            }
+
+            span {
+                font-weight: 500;
+            }
+        }
+
+        &-body {
+            margin-top: 20px;
+            text-align: left;
+
+            table {
+                background-color: white;
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.9em;
+                font-weight: normal;
+
+                th {
+                    border-bottom: #e33535 1px solid;
+                    border-top: #e33535 1px solid;
+                    font-weight: 500;
+                    background-color: rgb(248, 232, 232);
+                    font-size: 14px;
+                    padding: 4px 8px;
+                }
+
+                td {
+                    font-size: 12px;
+                    box-sizing: border-box;
+                    padding: 4px 8px;
+                }
+
+                tr {
+                    &:nth-child(even) {
+                        background-color: rgb(237, 237, 237);
+                    }
+                }
+            }
+
+            &-item {
+                margin-bottom: 20px;
+
+                h4 {
+                    margin: 0 0 12px 6px;
+                    font-size: 22px;
+                    font-weight: 500;
+                }
+            }
+        }
+
+        &-footer {
+            p {
+                border-top: 1px solid black;
+                padding: 8px 0 0 0;
+
+                margin: 40px 0 0 0;
+            }
+
+            a {
+                color: red;
+            }
+        }
+    }
+}
