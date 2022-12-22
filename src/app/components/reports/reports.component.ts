@@ -24,6 +24,8 @@ export class ReportsComponent {
     selectedMedias: string[] = [];
     selectedServices: string[] = [];
 
+    instagramContainers = [0];
+
     @ViewChild('mediaInput') mediaInput: ElementRef<HTMLInputElement>;
     @ViewChild('serviceInput') serviceInput: ElementRef<HTMLInputElement>;
 
@@ -36,7 +38,13 @@ export class ReportsComponent {
             user: [null],
             price: [null],
             medias: [null],
-            services: [null]
+            services: [null],
+            instagram: this.formBuilder.group({
+                instagramQty1: [null],
+                instagramCortesy1: [null],
+                instagramService1: [null],
+                instagramUrl1: [null]
+            })
         });
 
         this.filteredMedias = this.form.controls['medias'].valueChanges.pipe(
@@ -67,6 +75,10 @@ export class ReportsComponent {
         if (value) { this.selectedServices.push(value); }
         event.chipInput.clear();
         this.form.controls['services'].setValue(null);
+
+        if (value === 'Instagram') {
+            this.addInstagramLine();
+        }
     }
 
     removeMedia (option: string): void {
@@ -99,5 +111,15 @@ export class ReportsComponent {
         this.selectedServices.push(event.option.viewValue);
         this.serviceInput.nativeElement.value = '';
         this.form.controls['services'].setValue(this.selectedServices.toString().replace(/,/g, ', '));
+    }
+
+    addInstagramLine (): void {
+        this.instagramContainers.push(this.instagramContainers.length);
+
+        const group = this.form.get('instagram') as FormGroup;
+        group.addControl('instagramQty' + this.instagramContainers.length, this.formBuilder.control(null));
+        group.addControl('instagramCortesy' + this.instagramContainers.length, this.formBuilder.control(null));
+        group.addControl('instagramService' + this.instagramContainers.length, this.formBuilder.control(null));
+        group.addControl('instagramUrl' + this.instagramContainers.length, this.formBuilder.control(null));
     }
 }

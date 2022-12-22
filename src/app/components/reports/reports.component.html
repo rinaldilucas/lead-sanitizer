@@ -61,6 +61,30 @@
                 </mat-autocomplete>
             </mat-form-field>
 
+            <div *ngIf="selectedMedias.includes('Instagram')" formGroupName="instagram">
+                <h3>Instagram</h3>
+
+                <div id="contentInside" *ngFor="let instagramContainer of instagramContainers">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Quantidade</mat-label>
+                        <input matInput type="number" formControlName="instagramQty{{ instagramContainer + 1 }}" />
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Cortesias</mat-label>
+                        <input matInput type="number" formControlName="instagramCortesy{{ instagramContainer + 1 }}" />
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Serviço</mat-label>
+                        <input matInput type="text" formControlName="instagramService{{ instagramContainer + 1 }}" />
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Url</mat-label>
+                        <input matInput type="text" formControlName="instagramUrl{{ instagramContainer + 1 }}" />
+                    </mat-form-field>
+                    <a mat-raised-button color="accent" (click)="addInstagramLine()">+</a>
+                </div>
+            </div>
+
             <!-- //condicional baseado no valor do campo services -->
 
             <button mat-raised-button color="primary" (click)="generateReport()" class="btn btn-primary">Gerar</button>

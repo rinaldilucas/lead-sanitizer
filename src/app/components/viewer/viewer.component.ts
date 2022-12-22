@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import html2canvas from 'html2canvas';
 import JsPDF from 'jspdf';
@@ -10,7 +11,7 @@ import { StateService } from '../services/state.service';
 })
 export class ViewerComponent {
     currentDate = new Date();
-    report;
+    report: any;
     @ViewChild('pdfReport') pdfReport: ElementRef;
 
     constructor (private stateService: StateService) {}
@@ -39,7 +40,11 @@ export class ViewerComponent {
             pdf.internal.pageSize.height = componentHeight / 2;
 
             pdf.addImage(imgData, 'JPG', 0, 0, componentWidth / 2, componentHeight / 2);
-            pdf.save('Relatorio__DATA-cliente.pdf');
+
+            const date = formatDate(new Date(), 'dd/MM/YYYY', 'pt-BR');
+            const client = this.report.user;
+
+            pdf.save(`Relatorio__${date}-${client}.pdf`);
         });
     }
 }
