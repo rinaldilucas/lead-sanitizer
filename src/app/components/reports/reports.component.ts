@@ -1,6 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Router } from '@angular/router';
@@ -35,22 +35,23 @@ export class ReportsComponent {
         private stateService: StateService
     ) {
         this.form = this.formBuilder.group({
-            user: [null],
-            price: [null],
-            medias: [null],
-            services: [null],
-            instagram: this.formBuilder.group({
-                instagramQty1: [null],
-                instagramCortesy1: [null],
-                instagramService1: [null],
-                instagramUrl1: [null]
-            })
+            user: [null, Validators.required],
+            price: [null, Validators.required],
+            medias: [null, Validators.required],
+            services: [null, Validators.required],
+            instagram: this.formBuilder.array([this.formBuilder.group({
+                instagramQty_0: [null, Validators.required],
+                instagramCortesy_0: [null, Validators.required],
+                instagramService_0: [null, Validators.required],
+                instagramUrl_0: [null, Validators.required]
+            })])
         });
 
         this.filteredMedias = this.form.controls['medias'].valueChanges.pipe(
             startWith(null),
             map((fruit: string | null) => (fruit ? this._filterMedia(fruit) : this.medias.slice()))
         );
+
         this.filteredServices = this.form.controls['services'].valueChanges.pipe(
             startWith(null),
             map((fruit: string | null) => (fruit ? this._filterServices(fruit) : this.services.slice()))
@@ -58,9 +59,11 @@ export class ReportsComponent {
     }
 
     generateReport () : void {
-        const obj = { ...this.form.value };
-        this.stateService.data = obj;
-        this.router.navigate(['viewer']);
+        if (this.form.valid) {
+            const obj = { ...this.form.value };
+            this.stateService.data = obj;
+            this.router.navigate(['viewer']);
+        }
     }
 
     addMedia (event: MatChipInputEvent): void {
@@ -71,14 +74,11 @@ export class ReportsComponent {
     }
 
     addService (event: MatChipInputEvent): void {
+        debugger;
         const value = (event.value || '').trim();
         if (value) { this.selectedServices.push(value); }
         event.chipInput.clear();
         this.form.controls['services'].setValue(null);
-
-        if (value === 'Instagram') {
-            this.addInstagramLine();
-        }
     }
 
     removeMedia (option: string): void {
@@ -113,13 +113,30 @@ export class ReportsComponent {
         this.form.controls['services'].setValue(this.selectedServices.toString().replace(/,/g, ', '));
     }
 
-    addInstagramLine (): void {
+    addInstagramLine (i: any): void {
         this.instagramContainers.push(this.instagramContainers.length);
+        const instagram = this.form.controls['instagram'] as FormArray;
 
-        const group = this.form.get('instagram') as FormGroup;
-        group.addControl('instagramQty' + this.instagramContainers.length, this.formBuilder.control(null));
-        group.addControl('instagramCortesy' + this.instagramContainers.length, this.formBuilder.control(null));
-        group.addControl('instagramService' + this.instagramContainers.length, this.formBuilder.control(null));
-        group.addControl('instagramUrl' + this.instagramContainers.length, this.formBuilder.control(null));
+        const formControlFields = [
+            {
+                name: 'instagramQty_' + (i + 1),
+                control: new FormControl(null, Validators.required)
+            },
+            {
+                name: 'instagramCortesy_' + (i + 1),
+                control: new FormControl(null, Validators.required)
+            },
+            {
+                name: 'instagramService_' + (i + 1),
+                control: new FormControl(null, Validators.required)
+            },
+            {
+                name: 'instagramUrl_' + (i + 1),
+                control: new FormControl(null, Validators.required)
+            }
+        ];
+
+        instagram.push(this.formBuilder.group({}));
+        formControlFields.forEach(f => (<FormGroup>instagram.controls[i + 1]).addControl(f.name, f.control));
     }
 }

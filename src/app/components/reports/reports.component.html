@@ -2,92 +2,96 @@
     <div class="reports__wrapper">
         <h1>Gerador de relatórios</h1>
         <form class="reports__form" [formGroup]="form" (submit)="generateReport()">
-            <mat-form-field appearance="fill">
-                <mat-label>Usuário</mat-label>
-                <input matInput type="text" class="form-control" id="user" formControlName="user" />
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Valor</mat-label>
-                <input matInput type="number" class="form-control" id="price" formControlName="price" />
-            </mat-form-field>
+            <div class="reports__form-wrapper">
+                <mat-form-field appearance="fill">
+                    <mat-label>Usuário</mat-label>
+                    <input matInput type="text" class="form-control" id="user" formControlName="user" />
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Valor</mat-label>
+                    <input matInput type="number" class="form-control" id="price" formControlName="price" />
+                </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Redes Sociais</mat-label>
-                <mat-chip-list formControlName="medias" #mediaChipList>
-                    <mat-chip color="primary" *ngFor="let option of selectedMedias" (removed)="removeMedia(option)">
-                        {{ option }}
-                        <button matChipRemove>
-                            <mat-icon>cancel</mat-icon>
-                        </button>
-                    </mat-chip>
-                    <input
-                        #mediaInput
-                        formControlName="medias"
-                        [matAutocomplete]="mediasAutocomplete"
-                        [matChipInputFor]="mediaChipList"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        (matChipInputTokenEnd)="addMedia($event)"
-                    />
-                </mat-chip-list>
-                <mat-autocomplete #mediasAutocomplete="matAutocomplete" (optionSelected)="selectMedia($event)">
-                    <mat-option *ngFor="let option of filteredMedias | async" [value]="option">
-                        {{ option }}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Redes Sociais</mat-label>
+                    <mat-chip-list formControlName="medias" #mediaChipList>
+                        <mat-chip color="primary" *ngFor="let option of selectedMedias" (removed)="removeMedia(option)">
+                            {{ option }}
+                            <button matChipRemove>
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip>
+                        <input
+                            #mediaInput
+                            formControlName="medias"
+                            [matAutocomplete]="mediasAutocomplete"
+                            [matChipInputFor]="mediaChipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="addMedia($event)"
+                        />
+                    </mat-chip-list>
+                    <mat-autocomplete #mediasAutocomplete="matAutocomplete" (optionSelected)="selectMedia($event)">
+                        <mat-option *ngFor="let option of filteredMedias | async" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Serviços</mat-label>
-                <mat-chip-list formControlName="services" #serviceChipList>
-                    <mat-chip color="primary" *ngFor="let option of selectedServices" (removed)="removeService(option)">
-                        {{ option }}
-                        <button matChipRemove>
-                            <mat-icon>cancel</mat-icon>
-                        </button>
-                    </mat-chip>
-                    <input
-                        #serviceInput
-                        formControlName="services"
-                        [matAutocomplete]="servicesAutocomplete"
-                        [matChipInputFor]="serviceChipList"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        (matChipInputTokenEnd)="addService($event)"
-                    />
-                </mat-chip-list>
-                <mat-autocomplete #servicesAutocomplete="matAutocomplete" (optionSelected)="selectService($event)">
-                    <mat-option *ngFor="let option of filteredServices | async" [value]="option">
-                        {{ option }}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Serviços</mat-label>
+                    <mat-chip-list formControlName="services" #serviceChipList>
+                        <mat-chip color="primary" *ngFor="let option of selectedServices" (removed)="removeService(option)">
+                            {{ option }}
+                            <button matChipRemove>
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip>
+                        <input
+                            #serviceInput
+                            formControlName="services"
+                            [matAutocomplete]="servicesAutocomplete"
+                            [matChipInputFor]="serviceChipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="addService($event)"
+                        />
+                    </mat-chip-list>
+                    <mat-autocomplete #servicesAutocomplete="matAutocomplete" (optionSelected)="selectService($event)">
+                        <mat-option *ngFor="let option of filteredServices | async" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
 
-            <div *ngIf="selectedMedias.includes('Instagram')" formGroupName="instagram">
-                <h3>Instagram</h3>
+                <div *ngIf="selectedMedias.includes('Instagram')" formArrayName="instagram">
+                    <fieldset>
+                        <legend>Instagram</legend>
 
-                <div id="contentInside" *ngFor="let instagramContainer of instagramContainers">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Quantidade</mat-label>
-                        <input matInput type="number" formControlName="instagramQty{{ instagramContainer + 1 }}" />
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Cortesias</mat-label>
-                        <input matInput type="number" formControlName="instagramCortesy{{ instagramContainer + 1 }}" />
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Serviço</mat-label>
-                        <input matInput type="text" formControlName="instagramService{{ instagramContainer + 1 }}" />
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Url</mat-label>
-                        <input matInput type="text" formControlName="instagramUrl{{ instagramContainer + 1 }}" />
-                    </mat-form-field>
-                    <a mat-raised-button color="accent" (click)="addInstagramLine()">+</a>
+                        <div id="contentInside" *ngFor="let instagramContainer of instagramContainers; let i = index">
+                            <div formGroupName="{{ i }}">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput type="number" formControlName="instagramQty_{{ i }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Cortesias</mat-label>
+                                    <input matInput type="number" formControlName="instagramCortesy_{{ i }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput type="text" formControlName="instagramService_{{ i }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Url</mat-label>
+                                    <input matInput type="text" formControlName="instagramUrl_{{ i }}" />
+                                </mat-form-field>
+                                <a mat-raised-button color="accent" (click)="addInstagramLine(i)">+</a>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
 
-            <!-- //condicional baseado no valor do campo services -->
-
-            <button mat-raised-button color="primary" (click)="generateReport()" class="btn btn-primary">Gerar</button>
+            <button mat-raised-button color="primary" (click)="generateReport()">Gerar</button>
         </form>
     </div>
 </div>

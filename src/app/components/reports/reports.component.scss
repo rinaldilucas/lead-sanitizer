@@ -6,14 +6,14 @@
     min-height: calc(100vh - 64px);
 
     h1 {
-        margin: 0 0 12px;
-        font-size: 28px;
+        margin: 0 0 48px;
+        font-size: 34px;
         font-weight: 500;
     }
 
     &__wrapper {
-        width: 1035px;
-        margin: 25px 0 45px;
+        width: 100%;
+        margin: 55px 0 45px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -29,6 +29,7 @@
         flex-flow: wrap;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
 
         .mat-form-field {
             margin: 8px 20px;
