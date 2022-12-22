@@ -11,19 +11,51 @@
                 <input matInput type="number" class="form-control" id="price" formControlName="price" />
             </mat-form-field>
 
-            <mat-form-field class="full-width" appearance="fill">
-                <input #medias type="text" formControlName="socialmedias" matInput placeholder="Redes" [matAutocomplete]="mediasAutocomplete" />
-                <mat-autocomplete #mediasAutocomplete="matAutocomplete">
-                    <mat-option *ngFor="let option of mediasFilteredOptions | async" [value]="option">
+            <mat-form-field appearance="fill">
+                <mat-label>Redes Sociais</mat-label>
+                <mat-chip-list formControlName="medias" #mediaChipList>
+                    <mat-chip color="primary" *ngFor="let option of selectedMedias" (removed)="removeMedia(option)">
+                        {{ option }}
+                        <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip>
+                    <input
+                        #mediaInput
+                        formControlName="medias"
+                        [matAutocomplete]="mediasAutocomplete"
+                        [matChipInputFor]="mediaChipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="addMedia($event)"
+                    />
+                </mat-chip-list>
+                <mat-autocomplete #mediasAutocomplete="matAutocomplete" (optionSelected)="selectMedia($event)">
+                    <mat-option *ngFor="let option of filteredMedias | async" [value]="option">
                         {{ option }}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
 
-            <mat-form-field class="full-width" appearance="fill">
-                <input #services type="text" formControlName="services" matInput placeholder="Serviços" [matAutocomplete]="servicesAutocomplete" />
-                <mat-autocomplete #servicesAutocomplete="matAutocomplete">
-                    <mat-option *ngFor="let option of servicesFilteredOptions | async" [value]="option">
+            <mat-form-field appearance="fill">
+                <mat-label>Serviços</mat-label>
+                <mat-chip-list formControlName="services" #serviceChipList>
+                    <mat-chip color="primary" *ngFor="let option of selectedServices" (removed)="removeService(option)">
+                        {{ option }}
+                        <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip>
+                    <input
+                        #serviceInput
+                        formControlName="services"
+                        [matAutocomplete]="servicesAutocomplete"
+                        [matChipInputFor]="serviceChipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="addService($event)"
+                    />
+                </mat-chip-list>
+                <mat-autocomplete #servicesAutocomplete="matAutocomplete" (optionSelected)="selectService($event)">
+                    <mat-option *ngFor="let option of filteredServices | async" [value]="option">
                         {{ option }}
                     </mat-option>
                 </mat-autocomplete>
