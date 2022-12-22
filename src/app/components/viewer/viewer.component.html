@@ -17,7 +17,7 @@
                 </h3>
             </div>
             <div class="viewer__report-body">
-                <div class="viewer__report-body-item" *ngIf="this.report?.instList?.length > 0">
+                <div class="viewer__report-body-item" *ngIf="this.report?.instagram?.length > 0">
                     <h4>Instagram</h4>
                     <table>
                         <thead>
@@ -29,11 +29,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1000</td>
-                                <td>100</td>
-                                <td>Curtidas</td>
-                                <td><a target="_blank" href="www.google.com">google.com</a></td>
+                            <tr *ngFor="let array of this.formatedReport.instagram; let i = index">
+                                <td>{{ array["instagramQty"] }}</td>
+                                <td>{{ array["instagramCortesy"] }}</td>
+                                <td>{{ array["instagramService"] }}</td>
+                                <td>
+                                    <a href="#">{{ array["instagramUrl"] }}</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

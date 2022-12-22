@@ -12,12 +12,29 @@ import { StateService } from '../services/state.service';
 export class ViewerComponent {
     currentDate = new Date();
     report: any;
+    formatedReport = {
+        instagram: []
+    };
+
     @ViewChild('pdfReport') pdfReport: ElementRef;
 
     constructor (private stateService: StateService) {}
 
     ngOnInit (): void {
         this.report = this.stateService.data;
+
+        this.formatedReport.instagram = this.report.instagram.map((item) => {
+            const array = Object.entries(item);
+            const instagram = {
+                instagramQty: array[0][1],
+                instagramCortesy: array[1][1],
+                instagramService: array[2][1],
+                instagramUrl: array[3][1]
+            };
+
+            return instagram;
+        });
+
         this.stateService.data = [];
     }
 

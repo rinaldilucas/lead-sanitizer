@@ -74,7 +74,6 @@ export class ReportsComponent {
     }
 
     addService (event: MatChipInputEvent): void {
-        debugger;
         const value = (event.value || '').trim();
         if (value) { this.selectedServices.push(value); }
         event.chipInput.clear();
