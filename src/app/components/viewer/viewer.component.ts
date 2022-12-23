@@ -13,32 +13,84 @@ export class ViewerComponent {
     currentDate = new Date();
     report: any;
     formatedReport = {
-        instagram: []
+        instagram: [],
+        facebook: [],
+        youtube: [],
+        tiktok: [],
+        kwai: [],
+        telegram: [],
+        spotify: [],
+        twitter: [],
+        google: [],
+        twitch: [],
+        soundcloud: []
     };
+
+    medias: string[] = ['instagram', 'facebook', 'youtube', 'tiktok', 'kwai', 'telegram', 'spotify', 'twitter', 'google', 'twitch', 'soundcloud'];
 
     @ViewChild('pdfReport') pdfReport: ElementRef;
 
     constructor (private stateService: StateService) {}
 
     ngOnInit (): void {
-        this.report = this.stateService.data;
+        // this.report = this.stateService.data;
 
-        this.formatedReport.instagram = this.report.instagram.map((item) => {
-            const array = Object.entries(item);
-            const instagram = {
-                instagramQty: array[0][1],
-                instagramCortesy: array[1][1],
-                instagramService: array[2][1],
-                instagramUrl: array[3][1]
-            };
+        this.report = {
+            user: 'lucasreinaldi@gmail.com',
+            price: 21312,
+            medias: 'Instagram, Facebook',
+            services: '12312',
+            instagram: [
+                {
+                    instagramQty_1: 12312,
+                    instagramCortesy_1: 232,
+                    instagramService_1: '1231',
+                    instagramUrl_1: '232'
+                }
+            ],
+            facebook: [
+                {
+                    facebookQty_1: 3232,
+                    facebookCortesy_1: 3232,
+                    facebookService_1: '32',
+                    facebookUrl_1: '3232'
+                },
+                {
+                    facebookQty_2: 323,
+                    facebookCortesy_2: 32,
+                    facebookService_2: '32',
+                    facebookUrl_2: '32'
+                }
+            ],
+            youtube: [],
+            tiktok: [],
+            kwai: [],
+            telegram: [],
+            spotify: [],
+            twitter: [],
+            google: [],
+            twitch: [],
+            soundcloud: []
+        };
 
-            return instagram;
+        this.medias.forEach(media => {
+            this.formatedReport[media] = this.report[media].map((item) => {
+                const array = Object.entries(item);
+                const media = {
+                    Qty: array[0][1],
+                    Cortesy: array[1][1],
+                    Service: array[2][1],
+                    Url: array[3][1]
+                };
+
+                return media;
+            });
         });
 
         this.stateService.data = [];
     }
 
-    async generatePDF (): Promise<any> {
+    async generatePDF (): Promise<void> {
         const pdfReport = this.pdfReport.nativeElement;
 
         await html2canvas(pdfReport).then((canvas) => {
@@ -59,9 +111,9 @@ export class ViewerComponent {
             pdf.addImage(imgData, 'JPG', 0, 0, componentWidth / 2, componentHeight / 2);
 
             const date = formatDate(new Date(), 'dd/MM/YYYY', 'pt-BR');
-            const client = this.report.user;
+            const username = this.report.user;
 
-            pdf.save(`Relatorio__${date}-${client}.pdf`);
+            pdf.save(`Relatorio__${date}-${username.toString().toUpperCase()}.pdf`);
         });
     }
 }

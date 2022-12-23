@@ -1,19 +1,19 @@
 <div class="reports">
     <div class="reports__wrapper">
         <h1>Gerador de relatórios</h1>
-        <form class="reports__form" [formGroup]="form" (submit)="generateReport()">
+        <form class="reports__form" [formGroup]="form">
             <div class="reports__form-wrapper">
                 <mat-form-field appearance="fill">
-                    <mat-label>Usuário</mat-label>
+                    <mat-label>User</mat-label>
                     <input matInput type="text" class="form-control" id="user" formControlName="user" />
                 </mat-form-field>
                 <mat-form-field appearance="fill">
-                    <mat-label>Valor</mat-label>
+                    <mat-label>Price</mat-label>
                     <input matInput type="number" class="form-control" id="price" formControlName="price" />
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
-                    <mat-label>Redes Sociais</mat-label>
+                    <mat-label>Social Media</mat-label>
                     <mat-chip-list formControlName="medias" #mediaChipList>
                         <mat-chip color="primary" *ngFor="let option of selectedMedias" (removed)="removeMedia(option)">
                             {{ option }}
@@ -38,7 +38,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
-                    <mat-label>Serviços</mat-label>
+                    <mat-label>Services</mat-label>
                     <mat-chip-list formControlName="services" #serviceChipList>
                         <mat-chip color="primary" *ngFor="let option of selectedServices" (removed)="removeService(option)">
                             {{ option }}
@@ -66,32 +66,88 @@
                     <fieldset>
                         <legend>Instagram</legend>
 
-                        <div id="contentInside" *ngFor="let instagramContainer of instagramContainers; let i = index">
+                        <div *ngFor="let instagramContainer of instagramContainers; let i = index">
                             <div formGroupName="{{ i }}">
                                 <mat-form-field appearance="fill">
                                     <mat-label>Quantidade</mat-label>
-                                    <input matInput type="number" formControlName="instagramQty_{{ i }}" />
+                                    <input matInput type="number" formControlName="instagramQty_{{ i + 1 }}" />
                                 </mat-form-field>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Cortesias</mat-label>
-                                    <input matInput type="number" formControlName="instagramCortesy_{{ i }}" />
+                                    <input matInput type="number" formControlName="instagramCortesy_{{ i + 1 }}" />
                                 </mat-form-field>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Serviço</mat-label>
-                                    <input matInput type="text" formControlName="instagramService_{{ i }}" />
+                                    <input matInput type="text" formControlName="instagramService_{{ i + 1 }}" />
                                 </mat-form-field>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Url</mat-label>
-                                    <input matInput type="text" formControlName="instagramUrl_{{ i }}" />
+                                    <input matInput type="text" formControlName="instagramUrl_{{ i + 1 }}" />
                                 </mat-form-field>
-                                <a mat-raised-button color="accent" (click)="addInstagramLine(i)">+</a>
+                                <a mat-raised-button color="accent" (click)="addLine('Instagram', i + 1)">+</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div *ngIf="selectedMedias.includes('Facebook')" formArrayName="facebook">
+                    <fieldset>
+                        <legend>Facebook</legend>
+
+                        <div *ngFor="let facebookContainer of facebookContainers; let i = index">
+                            <div formGroupName="{{ i }}">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput type="number" formControlName="facebookQty_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Cortesias</mat-label>
+                                    <input matInput type="number" formControlName="facebookCortesy_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput type="text" formControlName="facebookService_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Url</mat-label>
+                                    <input matInput type="text" formControlName="facebookUrl_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <a mat-raised-button color="accent" (click)="addLine('Facebook', i + 1)">+</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div *ngIf="selectedMedias.includes('Youtube')" formArrayName="youtube">
+                    <fieldset>
+                        <legend>Youtube</legend>
+
+                        <div *ngFor="let youtubeContainer of youtubeContainers; let i = index">
+                            <div formGroupName="{{ i }}">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput type="number" formControlName="youtubeQty_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Cortesias</mat-label>
+                                    <input matInput type="number" formControlName="youtubeCortesy_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput type="text" formControlName="youtubeService_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Url</mat-label>
+                                    <input matInput type="text" formControlName="youtubeUrl_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <a mat-raised-button color="accent" (click)="addLine('Youtube', i + 1)">+</a>
                             </div>
                         </div>
                     </fieldset>
                 </div>
             </div>
 
-            <button mat-raised-button color="primary" (click)="generateReport()">Gerar</button>
+            <button mat-raised-button color="primary" (click)="generateReport()">Generate</button>
         </form>
     </div>
 </div>
