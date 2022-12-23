@@ -76,8 +76,8 @@ export class ReportsComponent {
 
     generateReport () : void {
         if (this.form.valid) {
-            const obj = { ...this.form.value };
-            this.stateService.data = obj;
+            const formData = { ...this.form.value };
+            this.stateService.data = formData;
             this.router.navigate(['viewer']);
         }
     }
