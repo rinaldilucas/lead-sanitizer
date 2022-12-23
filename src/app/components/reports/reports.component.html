@@ -145,6 +145,196 @@
                         </div>
                     </fieldset>
                 </div>
+
+                <div *ngIf="selectedMedias.includes('Tiktok')" formArrayName="tiktok">
+                    <fieldset>
+                        <legend>Tiktok</legend>
+
+                        <div *ngFor="let tiktokContainer of tiktokContainers; let i = index">
+                            <div formGroupName="{{ i }}">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput type="number" formControlName="tiktokQty_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Cortesias</mat-label>
+                                    <input matInput type="number" formControlName="tiktokCortesy_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput type="text" formControlName="tiktokService_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Url</mat-label>
+                                    <input matInput type="text" formControlName="tiktokUrl_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <a mat-raised-button color="accent" (click)="addLine('Tiktok', i + 1)">+</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div *ngIf="selectedMedias.includes('Kwai')" formArrayName="kwai">
+                    <fieldset>
+                        <legend>Kwai</legend>
+
+                        <div *ngFor="let kwaiContainer of kwaiContainers; let i = index">
+                            <div formGroupName="{{ i }}">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput type="number" formControlName="kwaiQty_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Cortesias</mat-label>
+                                    <input matInput type="number" formControlName="kwaiCortesy_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput type="text" formControlName="kwaiService_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Url</mat-label>
+                                    <input matInput type="text" formControlName="kwaiUrl_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <a mat-raised-button color="accent" (click)="addLine('Kwai', i + 1)">+</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div *ngIf="selectedMedias.includes('Spotify')" formArrayName="spotify">
+                    <fieldset>
+                        <legend>Spotify</legend>
+
+                        <div *ngFor="let spotifyContainer of spotifyContainers; let i = index">
+                            <div formGroupName="{{ i }}">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput type="number" formControlName="spotifyQty_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Cortesias</mat-label>
+                                    <input matInput type="number" formControlName="spotifyCortesy_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput type="text" formControlName="spotifyService_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Url</mat-label>
+                                    <input matInput type="text" formControlName="spotifyUrl_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <a mat-raised-button color="accent" (click)="addLine('Spotify', i + 1)">+</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div *ngIf="selectedMedias.includes('Twitter')" formArrayName="twitter">
+                    <fieldset>
+                        <legend>Twitter</legend>
+
+                        <div *ngFor="let twitterContainer of twitterContainers; let i = index">
+                            <div formGroupName="{{ i }}">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput type="number" formControlName="twitterQty_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Cortesias</mat-label>
+                                    <input matInput type="number" formControlName="twitterCortesy_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput type="text" formControlName="twitterService_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Url</mat-label>
+                                    <input matInput type="text" formControlName="twitterUrl_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <a mat-raised-button color="accent" (click)="addLine('Twitter', i + 1)">+</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div *ngIf="selectedMedias.includes('Google')" formArrayName="google">
+                    <fieldset>
+                        <legend>Google</legend>
+
+                        <div *ngFor="let googleContainer of googleContainers; let i = index">
+                            <div formGroupName="{{ i }}">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput type="number" formControlName="googleQty_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Cortesias</mat-label>
+                                    <input matInput type="number" formControlName="googleCortesy_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput type="text" formControlName="googleService_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Url</mat-label>
+                                    <input matInput type="text" formControlName="googleUrl_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <a mat-raised-button color="accent" (click)="addLine('Google', i + 1)">+</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div *ngIf="selectedMedias.includes('Twitch')" formArrayName="twitch">
+                    <fieldset>
+                        <legend>Twitch</legend>
+
+                        <div *ngFor="let twitchContainer of twitchContainers; let i = index">
+                            <div formGroupName="{{ i }}">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput type="number" formControlName="twitchQty_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Cortesias</mat-label>
+                                    <input matInput type="number" formControlName="twitchCortesy_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput type="text" formControlName="twitchService_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Url</mat-label>
+                                    <input matInput type="text" formControlName="twitchUrl_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <a mat-raised-button color="accent" (click)="addLine('Twitch', i + 1)">+</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div *ngIf="selectedMedias.includes('Soundcloud')" formArrayName="soundcloud">
+                    <fieldset>
+                        <legend>Soundcloud</legend>
+
+                        <div *ngFor="let soundcloudContainer of soundcloudContainers; let i = index">
+                            <div formGroupName="{{ i }}">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantidade</mat-label>
+                                    <input matInput type="number" formControlName="soundcloudQty_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Cortesias</mat-label>
+                                    <input matInput type="number" formControlName="soundcloudCortesy_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Serviço</mat-label>
+                                    <input matInput type="text" formControlName="soundcloudService_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Url</mat-label>
+                                    <input matInput type="text" formControlName="soundcloudUrl_{{ i + 1 }}" />
+                                </mat-form-field>
+                                <a mat-raised-button color="accent" (click)="addLine('Soundcloud', i + 1)">+</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
 
             <button mat-raised-button color="primary" (click)="generateReport()">Generate</button>

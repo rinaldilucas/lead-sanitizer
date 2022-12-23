@@ -2,7 +2,7 @@
     <div class="viewer__wrapper">
         <button mat-raised-button color="primary" (click)="generatePDF()" class="btn btn-primary">Gerar PDF</button>
 
-        <div class="viewer__report" #pdfReport id="pdfReport">
+        <div class="viewer__report" #reportContent>
             <div class="viewer__report-header">
                 <img src="./assets/images/logo.png" alt="Blast! Assessoria" />
                 <h1>Relátorio de aplicação</h1>
@@ -19,9 +19,9 @@
                     Redes: <span>{{ report.medias }}</span>
                 </h3>
             </div>
-            <div class="viewer__report-body">
-                <div class="viewer__report-body-item" *ngIf="this.report?.instagram?.length > 0">
-                    <h4>Instagram</h4>
+            <div *ngFor="let socialmedia of this.mappedInputs" class="viewer__report-body">
+                <div class="viewer__report-body-item" *ngIf="socialmedia.items.length > 0">
+                    <h4>{{ socialmedia.title | titlecase }}</h4>
                     <table>
                         <thead>
                             <tr>
@@ -32,68 +32,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let array of this.formatedReport.instagram; let i = index">
-                                <td>{{ array["Qty"] }}</td>
-                                <td>{{ array["Cortesy"] }}</td>
-                                <td>{{ array["Service"] }}</td>
-                                <td>
-                                    <a href="#">{{ array["Url"] }}</a>
+                            <tr *ngFor="let item of socialmedia.items">
+                                <td width="25%">{{ item["Qty"] }}</td>
+                                <td width="25%">{{ item["Cortesy"] }}</td>
+                                <td width="25%">{{ item["Service"] }}</td>
+                                <td width="25%">
+                                    <a href="#">{{ item["Url"] }}</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="viewer__report-body">
-                <div class="viewer__report-body-item" *ngIf="this.report?.facebook?.length > 0">
-                    <h4>Facebook</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Quantidade</th>
-                                <th>Cortesias</th>
-                                <th>Serviço</th>
-                                <th>Url</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let array of this.formatedReport.facebook; let i = index">
-                                <td>{{ array["Qty"] }}</td>
-                                <td>{{ array["Cortesy"] }}</td>
-                                <td>{{ array["Service"] }}</td>
-                                <td>
-                                    <a href="#">{{ array["Url"] }}</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="viewer__report-body">
-                <div class="viewer__report-body-item" *ngIf="this.report?.youtube?.length > 0">
-                    <h4>Youtube</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Quantidade</th>
-                                <th>Cortesias</th>
-                                <th>Serviço</th>
-                                <th>Url</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let array of this.formatedReport.youtube; let i = index">
-                                <td>{{ array["Qty"] }}</td>
-                                <td>{{ array["Cortesy"] }}</td>
-                                <td>{{ array["Service"] }}</td>
-                                <td>
-                                    <a href="#">{{ array["Url"] }}</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+
             <div class="viewer__report-footer">
                 <p>Gerado por Blast! Assessoria — <a target="_blank" href="https://blastassessoria.com.br">blastassessoria.com.br</a></p>
             </div>
