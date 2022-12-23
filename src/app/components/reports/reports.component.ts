@@ -17,25 +17,26 @@ export class ReportsComponent {
     @ViewChild('serviceInput', { read: MatAutocompleteTrigger }) mediasTrigger!: MatAutocompleteTrigger;
     form: FormGroup;
 
-    services: string[] = ['Curtidas', 'Views', 'Seguidores Premium', 'Seguidores Brasileiros', 'Seguidores Mundiais', 'Reels', 'Comentários', 'Repostagens', 'Plays', 'Tráfego', 'Retweets', 'Membros', 'Horas assistidas', 'Live'];
-    medias: string[] = ['Instagram', 'Facebook', 'Youtube', 'Tiktok', 'Kwai', 'Telegram', 'Spotify', 'Twitter', 'Google', 'Twitch', 'Soundcloud'];
+    services: string[] = ['curtidas', 'views', 'seguidores premium', 'seguidores brasileiros', 'seguidores mundiais', 'reels', 'comentários', 'repostagens', 'plays', 'tráfego', 'retweets', 'membros', 'horas assistidas', 'live'];
+    medias: string[] = ['instagram', 'facebook', 'youtube', 'tiktok', 'kwai', 'telegram', 'spotify', 'twitter', 'google', 'twitch', 'soundcloud'];
     filteredMedias: Observable<string[]>;
     filteredServices: Observable<string[]>;
     separatorKeysCodes: number[] = [ENTER, COMMA];
     selectedMedias: string[] = [];
     selectedServices: string[] = [];
-
-    instagramContainers = [0];
-    facebookContainers = [0];
-    youtubeContainers = [0];
-    tiktokContainers = [0];
-    kwaiContainers = [0];
-    telegramContainers = [0];
-    spotifyContainers = [0];
-    twitterContainers = [0];
-    googleContainers = [0];
-    twitchContainers = [0];
-    soundcloudContainers = [0];
+    containers: any[] = [
+        { title: 'instagram', items: [] },
+        { title: 'facebook', items: [] },
+        { title: 'youtube', items: [] },
+        { title: 'tiktok', items: [] },
+        { title: 'kwai', items: [] },
+        { title: 'telegram', items: [] },
+        { title: 'spotify', items: [] },
+        { title: 'twitter', items: [] },
+        { title: 'google', items: [] },
+        { title: 'twitch', items: [] },
+        { title: 'soundcloud', items: [] }
+    ];
 
     @ViewChild('mediaInput') mediaInput: ElementRef<HTMLInputElement>;
     @ViewChild('serviceInput') serviceInput: ElementRef<HTMLInputElement>;
@@ -144,69 +145,60 @@ export class ReportsComponent {
             control: new FormControl(null, Validators.required)
         }];
 
-        switch (text.toLowerCase()) {
+        const selectedMediaContainer = this.containers.find(c => c.title === text);
+        selectedMediaContainer?.items.push(selectedMediaContainer?.items.length);
+        switch (text) {
         case 'instagram':
-            if (i !== 0) this.instagramContainers.push(this.instagramContainers.length);
             const instagram = this.form.controls['instagram'] as FormArray;
             instagram.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>instagram.controls[i]).addControl(f.name, f.control));
             break;
         case 'facebook':
-            if (i !== 0) this.facebookContainers.push(this.facebookContainers.length);
             const facebook = this.form.controls['facebook'] as FormArray;
             facebook.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>facebook.controls[i]).addControl(f.name, f.control));
             break;
         case 'youtube':
-            if (i !== 0) this.youtubeContainers.push(this.youtubeContainers.length);
             const youtube = this.form.controls['youtube'] as FormArray;
             youtube.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>youtube.controls[i]).addControl(f.name, f.control));
             break;
         case 'tiktok':
-            if (i !== 0) this.tiktokContainers.push(this.tiktokContainers.length);
             const tiktok = this.form.controls['tiktok'] as FormArray;
             tiktok.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>tiktok.controls[i]).addControl(f.name, f.control));
             break;
         case 'kwai':
-            if (i !== 0) this.facebookContainers.push(this.facebookContainers.length);
             const kwai = this.form.controls['kwai'] as FormArray;
             kwai.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>kwai.controls[i]).addControl(f.name, f.control));
             break;
         case 'telegram':
-            if (i !== 0) this.telegramContainers.push(this.telegramContainers.length);
             const telegram = this.form.controls['telegram'] as FormArray;
             telegram.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>telegram.controls[i]).addControl(f.name, f.control));
             break;
         case 'spotify':
-            if (i !== 0) this.spotifyContainers.push(this.spotifyContainers.length);
             const spotify = this.form.controls['spotify'] as FormArray;
             spotify.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>spotify.controls[i]).addControl(f.name, f.control));
             break;
         case 'twitter':
-            if (i !== 0) this.twitterContainers.push(this.twitterContainers.length);
             const twitter = this.form.controls['twitter'] as FormArray;
             twitter.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>twitter.controls[i]).addControl(f.name, f.control));
             break;
         case 'google':
-            if (i !== 0) this.googleContainers.push(this.googleContainers.length);
             const google = this.form.controls['google'] as FormArray;
             google.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>google.controls[i]).addControl(f.name, f.control));
             break;
         case 'twitch':
-            if (i !== 0) this.twitchContainers.push(this.twitchContainers.length);
             const twitch = this.form.controls['twitch'] as FormArray;
             twitch.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>twitch.controls[i]).addControl(f.name, f.control));
             break;
         case 'soundcloud':
-            if (i !== 0) this.soundcloudContainers.push(this.soundcloudContainers.length);
             const soundcloud = this.form.controls['soundcloud'] as FormArray;
             soundcloud.push(this.formBuilder.group({}));
             formControlFields.forEach(f => (<FormGroup>soundcloud.controls[i]).addControl(f.name, f.control));
