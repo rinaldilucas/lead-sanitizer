@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import html2canvas from 'html2canvas';
 import JsPDF from 'jspdf';
-import { StateService } from '../services/state.service';
+import { StateService } from '../_shared/services/state.service';
 
 @Component({
     selector: 'app-viewer',
@@ -10,7 +10,7 @@ import { StateService } from '../services/state.service';
     styleUrls: ['./viewer.component.scss']
 })
 export class ViewerComponent {
-    @ViewChild('reportContent') reportContent: ElementRef;
+    @ViewChild('printableContent') printableContent: ElementRef;
     socialmedias: string[] = ['instagram', 'facebook', 'youtube', 'tiktok', 'kwai', 'telegram', 'spotify', 'twitter', 'google', 'twitch', 'soundcloud'];
     currentDate = new Date();
     report: any;
@@ -52,11 +52,11 @@ export class ViewerComponent {
     }
 
     async generatePDF (): Promise<void> {
-        const reportContent = this.reportContent.nativeElement;
+        const printableContent = this.printableContent.nativeElement;
 
-        await html2canvas(reportContent).then((canvas) => {
-            const componentWidth = reportContent.offsetWidth;
-            const componentHeight = reportContent.offsetHeight;
+        await html2canvas(printableContent).then((canvas) => {
+            const componentWidth = printableContent.offsetWidth;
+            const componentHeight = printableContent.offsetHeight;
             const orientation = componentWidth >= componentHeight ? 'l' : 'p';
             const imgData = canvas.toDataURL('image/png');
             const pdf = new JsPDF({ orientation, unit: 'px' });
@@ -65,7 +65,7 @@ export class ViewerComponent {
             pdf.addImage(imgData, 'JPG', 0, 0, componentWidth / 2, componentHeight / 2);
             const date = formatDate(new Date(), 'dd/MM/YYYY', 'pt-BR');
             const username = this.report.user;
-            pdf.save(`Relatorio__${date}-${username.toString().toUpperCase()}.pdf`);
+            pdf.save(`Reporte [${date}] - ${username.toString().toUpperCase()}.pdf`);
         });
     }
 }

@@ -5,7 +5,7 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/m
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Router } from '@angular/router';
 import { Observable, map, startWith } from 'rxjs';
-import { StateService } from '../services/state.service';
+import { StateService } from '../_shared/services/state.service';
 
 @Component({
     selector: 'app-reports',

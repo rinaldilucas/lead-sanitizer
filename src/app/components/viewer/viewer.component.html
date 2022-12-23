@@ -1,11 +1,11 @@
 <div class="viewer">
     <div class="viewer__wrapper">
-        <button mat-raised-button color="primary" (click)="generatePDF()" class="btn btn-primary">Gerar PDF</button>
+        <button mat-raised-button color="primary" (click)="generatePDF()">Generate PDF</button>
 
-        <div class="viewer__report" #reportContent>
+        <div class="viewer__report" #printableContent>
             <div class="viewer__report-header">
                 <img src="./assets/images/logo.png" alt="Blast! Assessoria" />
-                <h1>Relátorio de aplicação</h1>
+                <h1>Relatório de Aplicação</h1>
                 <h3>
                     Usuário: <span>@{{ report.user.toString().toUpperCase() }}</span>
                 </h3>

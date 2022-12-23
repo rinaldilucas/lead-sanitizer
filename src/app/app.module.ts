@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { NavbarComponent } from './components/_shared/navbar/navbar.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { UploadersComponent } from './components/uploaders/uploaders.component';
 import { ViewerComponent } from './components/viewer/viewer.component';
